@@ -18,6 +18,9 @@ Ordinary users can have a subscription of 6 months or 1 year"""
 
 import os
 
+class DuplicateEntryError(Exception):
+    pass
+
 class DigitalLibrary:
     def __init__(self, resource_name_title, resource_owner, resource_description, resource_type ) -> None:
         print("Inside parent project class or DigitalLibrary constructor")
@@ -26,13 +29,19 @@ class DigitalLibrary:
         self.resource_description =  resource_description
         self.resource_type = resource_type
         
+    def global_prompt(self, user):
+        instant_response = input("yes or no?: ").lower()
+        
+        return instant_response
+        
+        
     def user_login(self):
         x_user = input("Enter username: ")
         x_password = input("Enter password: ")
         
         return x_user, x_password
     
-    def verify_user(self, inst_username, inst_pwd):
+    def verify_user_login(self, inst_username, inst_pwd):
         access_granted = False
         user_file_contents = ""
         with open("users_file.txt", "r") as user_details:
@@ -58,12 +67,16 @@ class DigitalLibrary:
         
         return access_granted
     
-    def main_menu(inst_user):
+    def main_menu(self, inst_user):
         welcome_text = f"Welcome {inst_user}, to the Digital Library App.\n"\
                         "1. Register/remove user \n"\
                         "2. Access library resource \n"\
                         "3. Exit \n"
         print(welcome_text)
+        
+    def verify_reg_user(self, inst_username, inst_pwd):
+        # ensure the registration details are unique
+        pass
 
     def register_users(self, user):
         # check is user_file exists at start and creat one if not in existence
@@ -98,12 +111,17 @@ class DigitalLibrary:
                     library_users_file.write(user_entry+'\n')
             except ValueError as ve:
                 print(ve)
+            except DuplicateEntryError as deerr:
+                print(deerr)
             else:
                 pass
             finally:
                 pass
         else:
             print("Sorry you are not authorised to register a user")
+            
+    def remove_user(self, user):
+        pass
         
     def buy_purchase(self, resource_type):
         self.resource_type =  resource_type

@@ -6,56 +6,6 @@ class Films(Resources):
     def __init__(self, resource_name_title, resource_owner, resource_description, resource_type) -> None:
         super().__init__(resource_name_title, resource_owner, resource_description, resource_type)
         print("Inside Films class constructor")
-        
-    def film_menu(self, user):
-        film_menu_list =["Add movie", "View film list", "Borrow movie", "Return movie", "Watch movie", "Purchase movie", "Donate movie"]
-        # film_menu = f"Available options for movies menu include: \n"\
-        #              "1. Add movie \n"\
-        #              "2. View film list \n"\
-        #              "3. Borrow movie \n"\
-        #              "4. Return movie \n"\
-        #              "5. Watch movie \n"\
-        #              "6. Purchase movie \n"\
-        #              "7. Donate movie \n"
-        if user == "admin":
-            film_menu = film_menu_list
-            for i in range(len(film_menu)):
-                print(f"{i+1}. {film_menu[i]}")
-        elif user != "admin":
-            film_menu = film_menu_list[1:]
-            for i in range(len(film_menu)):
-                print(f"{i+1}. {film_menu[i]}")
-        
-        films_menu_option = int(input("Choose movie activity to perform: "))
-        if user == "admin":            
-            if films_menu_option == 1:
-                self.add_films_to_list(user)
-            elif films_menu_option == 2:
-                self.view_films_list()
-            elif films_menu_option == 3:
-                pass
-            elif films_menu_option == 4:
-                pass
-            elif films_menu_option == 5:
-                pass
-            elif films_menu_option == 6:
-                pass
-            elif films_menu_option == 7:
-                pass
-        elif user != "admin":
-            if films_menu_option == 1:
-                pass
-            elif films_menu_option == 2:
-                pass
-            elif films_menu_option == 3:
-                pass
-            elif films_menu_option == 4:
-                pass
-            elif films_menu_option == 5:
-                pass
-            elif films_menu_option == 6:
-                pass  
-
 
     def add_films_to_list(self, user):
         """Allows admin to add movie to library movies resource list.

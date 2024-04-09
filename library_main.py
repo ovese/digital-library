@@ -22,14 +22,26 @@ def main():
     
     [app_user, app_user_pwd] = my_digital_lib.user_login()
     # verify app_user is in registered list of users
-    is_verified = my_digital_lib.verify_user(app_user, app_user_pwd)
+    is_verified = my_digital_lib.verify_user_login(app_user, app_user_pwd)
     while is_verified == True:
         # print(f"Welcome {app_user}") # not needed as already referenced in main_menu function
         my_digital_lib.main_menu(app_user)
         # make selection from displayed options
-        user_selection  = int(input("What library resource are you interested in: "))
+        user_selection  = int(input("Select action to perform within digital library: "))
         if user_selection == 1:
-            my_digital_lib.register_users(app_user)
+            print("Do you want to register or remove a user(yes/no)?:")
+            resp = my_digital_lib.global_prompt(app_user)
+            if resp == "yes":
+                sel = input("Select action from below to perform\n"
+                            "reg..........Register new user\n"
+                            "rmv..........Remove existing user\n"
+                            ":")
+                if sel == "reg":
+                    my_digital_lib.register_users(app_user)
+                elif sel == "rmv":
+                    my_digital_lib.remove_user(app_user)
+            elif resp == "no":
+                print("Returning to main menu...")
         elif user_selection == 2:
             # call the film menu selection to determine what user wants to do
             # e.g. add movie to list. borrow movie, return movie, watch movie
