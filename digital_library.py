@@ -74,9 +74,34 @@ class DigitalLibrary:
                         "3. Exit \n"
         print(welcome_text)
         
-    def verify_reg_user(self, inst_username, inst_pwd):
+    def verify_reg_username(self, inst_username):
         # ensure the registration details are unique
-        pass
+        # ensure the userID meets specification in character format
+        username_ok = False
+        user_file_contents = ""
+        with open("users_file.txt", "r") as user_details:
+            user_file_contents = user_details.readlines()
+        
+        # I am going to take each string, strip the \n char then extract part i need
+        # which in this case is just the username or userid
+        user_name_list = []
+        for i, item in enumerate(user_file_contents):
+            user_name_list.append(item.strip().split(',')[0])
+            
+        # use defensive programming to vet the selected username
+        try:
+            if inst_username in user_name_list:
+                username_ok = False
+                raise DuplicateEntryError("Duplicate username entry detected")
+        except DuplicateEntryError as deerr:
+            print(deerr)
+        else:
+            username_ok = True
+            print(f"Username {inst_username} accepted!!!")
+        finally:
+            pass
+        
+        return username_ok
 
     def register_users(self, user):
         # check is user_file exists at start and creat one if not in existence
@@ -91,8 +116,15 @@ class DigitalLibrary:
                 password = input("Enter password: ")
                 subscription_type = input("Enter subscription type(basic, unlimited): ")
                 subscription_duration = input("Enter duration of subscription(6 or 12 months): ")
+                # validate username here using verify_reg_username(self, inst_username) function
+                is_valid_username = self.verify_reg_username(user_name)
                 user_dict = {}
-                user_dict["user_name"] = user_name
+                if is_valid_username == True:
+                    # if username is unique and meets specification then allow to be added to user database file
+                    user_dict["user_name"] = user_name
+                elif is_valid_username == False:
+                    # if username is duplicate or doesnt meet criteria, request entry again
+                    pass # todo function added later: request username again or implement while loop
                 user_dict["password"] = password
                 user_dict["sub_type"] = subscription_type
                 user_dict["sub_duration"] = subscription_duration
