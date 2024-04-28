@@ -1,5 +1,8 @@
 from digital_library import DigitalLibrary
 
+# Next 2 lines were removed on account of fixing circular import issue
+# from text_resource import Texts  
+# from film_resource import Films
 
 
 class Resources(DigitalLibrary):
@@ -12,28 +15,14 @@ class Resources(DigitalLibrary):
         available_resources = "Welcome to the Digital Library App.\n "\
                 "This app allows you to: \n"\
                 "Select a resource (text or film) to use. Available resources are: \n"\
-                "1. Texts (Books, journals, ) \n"\
+                "1. Texts (Books, journals, manuscripts) \n"\
                 "2. Films (Disks, tapes, transparencies, ) \n"\
                 "3. Events (Exibition, expo, ) \n"\
                 "4. Return (return to main menu) \n"
         print(f"{available_resources}")
         res_selector = int(input("Select your option from the list: "))
-        if res_selector == 1:
-            # make a choice of text to access and how you want to access the text
-            # type of text, title, author, published date
-            # read, borrow, buy, donate
-            # the function to be called here will come from the text resource class
-            self.text_resource_menu(user)
-        elif res_selector == 2:
-            # access films menu
-            self.film_resource_menu(user)
-        elif res_selector == 3:
-            # access events
-            self.event_resource_menu(user)
-        elif res_selector == 4:
-            DigitalLibrary.main_menu(user)
-        else:
-            print("Unknown option selected")
+            
+        return res_selector
             
     # define the varfious resource menus here
     def film_resource_menu(self, user):
@@ -55,38 +44,26 @@ class Resources(DigitalLibrary):
             for i in range(len(film_menu)):
                 print(f"{i+1}. {film_menu[i]}")
         
-        films_menu_option = int(input("Choose movie activity to perform: "))
-        if user == "admin":            
-            if films_menu_option == 1:
-                self.add_films_to_list(user)
-            elif films_menu_option == 2:
-                self.view_films_list()
-            elif films_menu_option == 3:
-                pass
-            elif films_menu_option == 4:
-                pass
-            elif films_menu_option == 5:
-                pass
-            elif films_menu_option == 6:
-                pass
-            elif films_menu_option == 7:
-                pass
-        elif user != "admin":
-            if films_menu_option == 1:
-                pass
-            elif films_menu_option == 2:
-                pass
-            elif films_menu_option == 3:
-                pass
-            elif films_menu_option == 4:
-                pass
-            elif films_menu_option == 5:
-                pass
-            elif films_menu_option == 6:
-                pass
+        menu_option = int(input("Choose movie activity to perform: "))
+        
+        return menu_option
+
             
     def text_resource_menu(self, user):
-        pass
+        text_menu_list =["Add text", "View text list", "Borrow text", "Return text", "Read text", "Purchase text", "Donate text"]
+        if user == "admin":
+            text_menu = text_menu_list
+            for i in range(len(text_menu)):
+                print(f"{i+1}. {text_menu[i]}")
+        elif user != "admin":
+            text_menu = text_menu_list[1:]
+            for i in range(len(text_menu)):
+                print(f"{i+1}. {text_menu[i]}")
+                
+        menu_option = int(input('Select what you want to do with text: '))
+        
+        return menu_option
+            
     
     def event_resource_menu(self, user):
         pass

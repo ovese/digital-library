@@ -6,3 +6,6 @@ __pycache__/
 
 # dont include any text files
 *.txt
+
+# dont include any configuration files
+*.ini

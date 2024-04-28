@@ -4,8 +4,15 @@ from resources import Resources
 
 class Films(Resources):
     def __init__(self, resource_name_title, resource_owner, resource_description, resource_type) -> None:
+        """I have had issues with circular imports which has made me remove this version of constructor.
+        I have also had to remove the refernce to inheritance in the definition of the class. 
+        Previously, I was inheriting from Resources class. It can be seeen that I have commented out the 
+        reference to the import on line 3"""
         super().__init__(resource_name_title, resource_owner, resource_description, resource_type)
         print("Inside Films class constructor")
+    
+    # def __init__(self):
+    #     pass
 
     def add_films_to_list(self, user):
         """Allows admin to add movie to library movies resource list.
@@ -73,3 +80,35 @@ class Films(Resources):
     
     def donate_movie(self, movie_title):
         return movie_title
+    
+    # define and implement a main method here which uses all the functions above
+    # or that holds the logic for how this class is accessed and works
+    def movie_manager(self, films_menu_option, instance_user):
+        if instance_user == "admin":            
+            if films_menu_option == 1:
+                self.add_films_to_list(instance_user)
+            elif films_menu_option == 2:
+                self.view_films_list()
+            elif films_menu_option == 3:
+                pass
+            elif films_menu_option == 4:
+                pass
+            elif films_menu_option == 5:
+                pass
+            elif films_menu_option == 6:
+                pass
+            elif films_menu_option == 7:
+                pass
+        elif instance_user != "admin":
+            if films_menu_option == 1:
+                pass
+            elif films_menu_option == 2:
+                pass
+            elif films_menu_option == 3:
+                pass
+            elif films_menu_option == 4:
+                pass
+            elif films_menu_option == 5:
+                pass
+            elif films_menu_option == 6:
+                pass

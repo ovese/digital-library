@@ -1,5 +1,6 @@
 from digital_library import DigitalLibrary
 from resources import Resources
+from text_resource import Texts
 from film_resource import Films
 
 # time
@@ -19,6 +20,8 @@ print(f"Date: {curr_date}")
 def main():
     my_digital_lib = DigitalLibrary("","","","")
     my_resource = Resources("","","","")
+    my_text = Texts("","","","")
+    my_film = Films("","","","")
     
     [app_user, app_user_pwd] = my_digital_lib.user_login()
     # verify app_user is in registered list of users
@@ -47,7 +50,25 @@ def main():
             # e.g. add movie to list. borrow movie, return movie, watch movie
             # any user can only borrow, return or watch movie
             # only admin can add a movie
-            my_resource.access_resource(app_user)
+            ret_resource = my_resource.access_resource(app_user)
+            if ret_resource == 1:
+            # make a choice of text to access and how you want to access the text
+            # type of text, title, author, published date
+            # read, borrow, buy, donate
+            # the function to be called here will come from the text resource class
+                ret_text_menu_option = my_resource.text_resource_menu(app_user)
+                my_text.text_manager(ret_text_menu_option, app_user)
+            elif ret_resource == 2:
+                # access films menu
+                ret_film_menu_option = my_resource.film_resource_menu(app_user)
+                my_film.movie_manager(ret_film_menu_option, app_user)
+            elif ret_resource == 3:
+                # access events
+                my_resource.event_resource_menu(app_user)
+            elif ret_resource == 4:
+                DigitalLibrary.main_menu(app_user)
+            else:
+                print("Unknown option selected")
         elif user_selection == 3:
             exit()
         else:
